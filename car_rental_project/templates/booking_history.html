@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="booking-history-container">
+    <h2>Your Booking History</h2>
+    {% if bookings %}
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Car Name</th>
+                    <th>Model</th>
+                    <th>Booking Date</th>
+                    <th>Return Date</th>
+                    <th>Price per Day</th>
+                    <th>Total Cost</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.car_name }}</td>
+                        <td>{{ booking.model_name }}</td>
+                        <td>{{ booking.booking_date }}</td>
+                        <td>{{ booking.return_date }}</td>
+                        <td>${{ booking.price_per_day }}</td>
+                        <td>${{ booking.total_cost }}</td>
+                        <td>{{ booking.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You have no booking history yet.</p>
+    {% endif %}
+    <a href="{{ url_for('customer_dashboard') }}"><button class="back-button">Back to Dashboard</button></a>
+</div>
+{% endblock %}

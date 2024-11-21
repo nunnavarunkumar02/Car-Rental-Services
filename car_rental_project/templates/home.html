@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-page">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>Welcome to Car Rental Service</h1>
+        <p>Providing premium car rental services with a variety of options to suit all your travel needs.</p>
+        <a href="{{ url_for('login') }}" class="button">Get Started</a>
+    </section>
+
+    <!-- About Section -->
+    <section class="about titanium-theme">
+        <h2>About Us</h2>
+        <p>Our car rental service has been a trusted provider for over a decade. We prioritize quality, reliability, and customer satisfaction, offering a wide range of vehicles for every occasion, from economy to luxury cars.</p>
+        <img src="{{ url_for('static', filename='images/About_us.jpg') }}" alt="About Us" class="about-image">
+    </section>
+
+    <!-- Services Section -->
+    <section class="services gradient-theme">
+        <h2>Our Services</h2>
+        <div class="service-cards">
+            <div class="service-card">
+                <img src="{{ url_for('static', filename='images/Economy.jpg') }}" alt="Economy Cars">
+                <h3>Economy Cars</h3>
+                <p>Affordable rental options for budget-conscious travelers.</p>
+            </div>
+            <div class="service-card">
+                <img src="{{ url_for('static', filename='images/Luxury.jpg') }}" alt="Luxury Cars">
+                <h3>Luxury Cars</h3>
+                <p>Drive in style with our premium selection of luxury cars.</p>
+            </div>
+            <div class="service-card">
+                <img src="{{ url_for('static', filename='images/Family.jpg') }}" alt="Family Cars">
+                <h3>Family Cars</h3>
+                <p>Spacious and comfortable cars for your family trips.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Cars Section -->
+<section class="featured-cars titanium-theme">
+    <h2>Featured Cars</h2>
+    <div class="featured-cars-gallery">
+        <div class="featured-car-item">
+            <img src="{{ url_for('static', filename='images/car 1.jpeg') }}" alt="Car 1">
+            <h3 class="car-name">Toyota Camry</h3>
+            <p class="car-info">A comfortable sedan perfect for long drives and family trips.</p>
+        </div>
+        <div class="featured-car-item">
+            <img src="{{ url_for('static', filename='images/car 2.jpeg') }}" alt="Car 2">
+            <h3 class="car-name">Nissan Altima</h3>
+            <p class="car-info">Reliable and fuel-efficient, ideal for daily commutes and city driving.</p>
+        </div>
+        <div class="featured-car-item">
+            <img src="{{ url_for('static', filename='images/car 3.jpg') }}" alt="Car 3">
+            <h3 class="car-name">Honda Civic</h3>
+            <p class="car-info">A sporty look with powerful performance for an enjoyable drive.</p>
+        </div>
+        <div class="featured-car-item">
+            <img src="{{ url_for('static', filename='images/car 4.jpg') }}" alt="Car 4">
+            <h3 class="car-name">Hyundai Sonata</h3>
+            <p class="car-info">An elegant sedan with spacious interiors and advanced features.</p>
+        </div>
+        <div class="featured-car-item">
+            <img src="{{ url_for('static', filename='images/car 5.jpg') }}" alt="Car 5">
+            <h3 class="car-name">Kia Forte</h3>
+            <p class="car-info">Compact and stylish, this car is easy to maneuver and park in tight spaces.</p>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- Contact Section -->
+    <section class="contact gradient-theme">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, please reach out to us using the form below.</p>
+        <form action="{{ url_for('contact_us') }}" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit" class="button">Send Message</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

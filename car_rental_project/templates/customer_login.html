@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-page">
+    <div class="login-container">
+        <h1>Login To Your Dashboard</h1>
+        <form method="post" action="{{ url_for('login') }}">
+            <div class="row">
+                <label for="email">Email</label>
+                <input type="email" name="email" autocomplete="off" placeholder="email@example.com" required>
+            </div>
+            <div class="row">
+                <label for="password">Password</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

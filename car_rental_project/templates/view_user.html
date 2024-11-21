@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="user-detail-card">
+    <h2>User Details - {{ user.name }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Phone:</strong> {{ user.phone }}</p>
+    <p><strong>Address:</strong> {{ user.address }}</p>
+    <p><strong>Payment Method:</strong> {{ user.payment_method or 'N/A' }}</p>
+</div>
+
+<h3>Booking History</h3>
+{% if bookings %}
+    <table class="booking-table">
+        <thead>
+            <tr>
+                <th>Car</th>
+                <th>Booking Date</th>
+                <th>Return Date</th>
+                <th>Total Cost</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.car_name }} - {{ booking.model_name }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.return_date }}</td>
+                <td>${{ booking.total_cost }}</td>
+                <td>{{ booking.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No booking history available.</p>
+{% endif %}
+
+<a href="{{ url_for('manage_users') }}" class="back-btn">Back to Manage Users</a>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="add-car-page">
+    <div class="add-car-form">
+        <h2>Add New Car</h2>
+        <!-- Form for Adding a New Car -->
+        <form method="POST" action="{{ url_for('add_car') }}" enctype="multipart/form-data">
+            <!-- Existing form fields for car details -->
+            <label for="car_name">Car Name:</label>
+            <input type="text" name="car_name" id="car_name" required>
+
+            <label for="model_name">Model Name:</label>
+            <input type="text" name="model_name" id="model_name" required>
+
+            <label for="rating">Rating:</label>
+            <input type="number" name="rating" id="rating" min="1" max="5" step="0.1" required>
+
+            <label for="available_date">Available Date:</label>
+            <input type="date" name="available_date" id="available_date" required>
+
+            <label for="price_per_day">Price per Day:</label>
+            <input type="number" name="price_per_day" id="price_per_day" min="0" step="0.01" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" required></textarea>
+
+            <!-- New fields for capacity, luggage space, and doors -->
+            <label for="capacity">Capacity:</label>
+            <input type="number" name="capacity" id="capacity" min="1" required>
+
+            <label for="luggage_space">Luggage Space:</label>
+            <input type="number" name="luggage_space" id="luggage_space" min="0" required>
+
+            <label for="doors">Doors:</label>
+            <input type="number" name="doors" id="doors" min="1" required>
+
+            <label for="car_image">Car Image:</label>
+            <input type="file" name="car_image" id="car_image" accept="image/*" required>
+
+            <button type="submit">Add Car</button>
+        </form>
+
+        <br><br>
+        <a href="{{ url_for('admin_dashboard') }}" class="button">Back to Admin Dashboard</a>
+    </div>
+</div>
+
+<!-- JavaScript to check internet connection status -->
+<script>
+    // Function to toggle visibility of the back button based on network status
+    function updateNetworkStatus() {
+        const backButton = document.getElementById('backButton');
+        if (navigator.onLine) {
+            backButton.style.display = 'none'; // Hide button if online
+        } else {
+            backButton.style.display = 'inline-block'; // Show button if offline
+        }
+    }
+
+    // Event listeners for online and offline events
+    window.addEventListener('online', updateNetworkStatus);
+    window.addEventListener('offline', updateNetworkStatus);
+
+    // Initial check
+    updateNetworkStatus();
+</script>
+{% endblock %}

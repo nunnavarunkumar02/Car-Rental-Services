@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Update User Information</h2>
+<form method="POST" action="{{ url_for('update_user_info') }}">
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="{{ customer.name }}" required>
+
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone" value="{{ customer.phone }}" required>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" placeholder="Enter new password" required>
+
+    <label for="address">Address:</label>
+    <input type="text" name="address" value="{{ customer.address }}" required>
+
+    <button type="submit">Update Info</button>
+</form>
+<div class="back-dashboard-container">
+    <button onclick="window.location.href='{{ url_for('customer_dashboard') }}'" class="back-dashboard-btn">
+        Back to Dashboard
+    </button>
+</div>
+
+<!-- Back to User Dashboard Button -->
+<a href="{{ url_for('customer_dashboard') }}" class="btn btn-secondary">Back to User Dashboard</a>
+{% endblock %}

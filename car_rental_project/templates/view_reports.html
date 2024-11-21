@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Admin Reports</h2>
+
+<!-- Booking Reports Section -->
+<section class="report-section">
+    <h3>Booking Reports</h3>
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Total Bookings</th>
+                <th>Total Revenue</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in monthly_bookings %}
+            <tr>
+                <td>{{ booking.month }}</td>
+                <td>{{ booking.total_bookings }}</td>
+                <td>${{ booking.total_revenue }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- Customer Reports Section -->
+<section class="report-section">
+    <h3>Customer Reports</h3>
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>New Customers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in monthly_customers %}
+            <tr>
+                <td>{{ customer.month }}</td>
+                <td>{{ customer.new_customers }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- Payment Reports Section -->
+<section class="report-section">
+    <h3>Payment Reports</h3>
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Payment Method</th>
+                <th>Count</th>
+                <th>Total Revenue</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payment_summary %}
+            <tr>
+                <td>{{ payment.method }}</td>
+                <td>{{ payment.count }}</td>
+                <td>${{ payment.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- Car Availability Reports Section -->
+<section class="report-section">
+    <h3>Car Availability Reports</h3>
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Car Model</th>
+                <th>Availability</th>
+                <th>Total Bookings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in car_availability %}
+            <tr>
+                <td>{{ car.model }}</td>
+                <td>{{ car.available }}</td>
+                <td>{{ car.total_bookings }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <h1>Welcome, {{ admin.name }}!</h1>
+
+    <a href="{{ url_for('admin_notifications') }}" class="notification-link">
+    View Notifications
+    {% if unread_count > 0 %}
+        <span class="badge">{{ unread_count }}</span>
+    {% endif %}
+</a>
+    <!-- Navigation Links -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('manage_users') }}">Manage Users</a></li>
+            <li><a href="{{ url_for('add_car') }}">Add New Car</a></li>
+            <li><a href="{{ url_for('update_admin_profile') }}">Update Profile</a></li>
+            <li><a href="{{ url_for('view_reports') }}">View Reports</a></li>
+            <li><a href="{{ url_for('car_rental_analytics') }}" class="button button-analytics">Car Rental Analytics</a></li>
+            <li><a href="{{ url_for('manage_cars') }}" class="button button-manage-cars">Car Inventory</a></li>
+        </ul>
+    </nav>
+
+    <!-- Quick Stats -->
+    <section class="quick-stats">
+        <div class="stat-box">
+            <h3>Total Cars Available</h3>
+            <p>{{ available_cars_count }}</p>
+        </div>
+        <div class="stat-box">
+            <h3>Total Customers</h3>
+            <p>{{ customer_count }}</p>
+        </div>
+    </section>
+
+    <!-- List of All Cars -->
+    <section class="car-list">
+        <h3>All Cars</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Car Name</th>
+                    <th>Model Name</th>
+                    <th>Rating</th>
+                    <th>Available Date</th>
+                    <th>Price per Day</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in cars %}
+                <tr>
+                    <td>{{ car.car_name }}</td>
+                    <td>{{ car.model_name }}</td>
+                    <td>{{ car.rating }}</td>
+                    <td>{{ car.available_date }}</td>
+                    <td>{{ car.price_per_day }}</td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="{{ url_for('edit_car', car_id=car.car_id) }}" class="button button-edit">Edit</a>
+                            <a href="{{ url_for('delete_car', car_id=car.car_id) }}" class="button button-delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<header>
+    <div class="navbar">
+        <h1>Car Rental Service</h1>
+        <nav>
+            <ul class="nav-links">
+                {% if request.path == '/' %}
+                    <!-- Links for Home Page -->
+                    <li><a href="{{ url_for('home') }}" class="{{ 'active' if request.path == '/' else '' }}">Home</a></li>
+                    <li><a href="{{ url_for('login') }}" class="{{ 'active' if request.path == '/login' else '' }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}" class="{{ 'active' if request.path == '/register' else '' }}">Register</a></li>
+                {% elif request.path == '/login' %}
+                    <!-- Links for Login Page -->
+                    <li><a href="{{ url_for('home') }}" class="{{ 'active' if request.path == '/' else '' }}">Home</a></li>
+                    <li><a href="{{ url_for('register') }}" class="{{ 'active' if request.path == '/register' else '' }}">Register</a></li>
+                {% elif request.path == '/register' %}
+                    <!-- Links for Register Page -->
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% elif session.get('user_logged_in') %}
+                    <!-- Links for Logged-in Users -->
+                    <li><a href="{{ url_for('customer_dashboard') }}" class="{{ 'active' if request.path == '/customer/dashboard' else '' }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('booking_history') }}" class="{{ 'active' if request.path == '/booking/history' else '' }}">Booking History</a></li>
+                    <li><a href="{{ url_for('update_user_info') }}" class="{{ 'active' if request.path == '/update/user/info' else '' }}">Update Info</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="{{ 'active' if request.path == '/logout' else '' }}">Logout</a></li>
+                {% elif session.get('user_role') == 'admin' %}
+                    <!-- Links for Admin -->
+                    <li><a href="{{ url_for('admin_dashboard') }}" class="{{ 'active' if request.path == '/admin/dashboard' else '' }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('admin_manage_users') }}" class="{{ 'active' if request.path == '/admin/manage/users' else '' }}">Manage Users</a></li>
+                    <li><a href="{{ url_for('admin_add_car') }}" class="{{ 'active' if request.path == '/admin/add/car' else '' }}">Add Car</a></li>
+                    <li><a href="{{ url_for('admin_reports') }}" class="{{ 'active' if request.path == '/admin/reports' else '' }}">View Reports</a></li>
+
+                    <!-- Notification Button for Admin -->
+                    <li class="notification">
+                        <a href="{{ url_for('admin_notifications') }}">
+                            <span>Notifications</span>
+                            {% if unread_count > 0 %}
+                                <span class="badge">{{ unread_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+
+                    <li><a href="{{ url_for('logout') }}" class="{{ 'active' if request.path == '/logout' else '' }}">Logout</a></li>
+                {% else %}
+                    <!-- Links for Guests -->
+                    <li><a href="{{ url_for('login') }}" class="{{ 'active' if request.path == '/login' else '' }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}" class="{{ 'active' if request.path == '/register' else '' }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>

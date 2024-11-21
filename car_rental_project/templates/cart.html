@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Your Cart</h2>
+{% if cars %}
+    <ul>
+        {% for car in cars %}
+        <li>
+            <h3>{{ car.car_name }}</h3>
+            <p>Price per day: ${{ car.price_per_day }}</p>
+            <p>Capacity: {{ car.capacity }}</p>
+            <p>Luggage Space: {{ car.luggage_space }}</p>
+            <p>Doors: {{ car.doors }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <button onclick="window.location.href='{{ url_for('customer_dashboard') }}'">Back to Dashboard</button>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+{% endblock %}

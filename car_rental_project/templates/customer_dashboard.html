@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="customer-dashboard">
+
+    <!-- Header with Settings Icon and User's Name -->
+    <header class="dashboard-header">
+        <h1 class="dashboard-title">Welcome, {{ customer_name }}!</h1>
+
+        <!-- Settings Icon -->
+        <div class="settings-container">
+            <i class="fas fa-cog settings-icon" onclick="toggleSettingsMenu()"></i> <!-- Settings Icon -->
+
+            <!-- Settings Dropdown Menu -->
+            <div id="settingsMenu" class="settings-menu">
+                <ul>
+                    <li><a href="{{ url_for('update_user_info') }}">Update User Info</a></li>
+                    <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+                    <li><a href="{{ url_for('view_cart') }}">View Cart</a></li>
+                    <li><a href="{{ url_for('update_payment_details') }}">Update Payment Details</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search and Filter Form -->
+    <form method="GET" action="{{ url_for('search_cars') }}" class="filter-form">
+        <input type="text" name="query" placeholder="Search cars by name or model...">
+        <select name="car_type">
+            <option value="">All Types</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+        </select>
+        <input type="number" name="max_price" placeholder="Max Price">
+        <button type="submit">Search</button>
+    </form>
+
+    <section class="car-listing">
+        {% for car in cars %}
+        <div class="car-card">
+            <img src="{{ url_for('static', filename=car.image_url.lstrip('/').replace('\\', '/')) }}" alt="{{ car.car_name }}">
+            <div class="car-details">
+                <h2>{{ car.car_name }}</h2>
+                <div class="car-features">
+                    <span><i class="fas fa-users" title="Family Capacity"></i> {{ car.capacity or 'N/A' }}</span>
+                    <span><i class="fas fa-suitcase" title="Luggage Space"></i> {{ car.luggage_space or 'N/A' }}</span>
+                    <span><i class="fas fa-door-open" title="Number of Doors"></i> {{ car.doors or 'N/A' }}</span>
+                </div>
+
+                <p><strong>${{ car.price_per_day }}</strong> /day</p>
+                <div class="button-container">
+                    <button onclick="window.location.href='{{ url_for('book_car', car_id=car.car_id) }}'" class="view-deal-btn">Book Car</button>
+                    <button type="button" onclick="addToCart({{ car.car_id }})" class="view-deal-btn">Add to Cart</button>
+                </div>
+            </div><br><br>
+        </div>
+        {% endfor %}
+    </section>
+
+    <!-- Recent Bookings Section -->
+    <section class="recent-bookings">
+        <h2>Recent Bookings</h2>
+        {% if bookings %}
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Car Name</th>
+                        <th>Booking Date</th>
+                        <th>Return Date</th>
+                        <th>Price per Day</th>
+                        <th>Total Cost</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.car_name }}</td>
+                            <td>{{ booking.booking_date }}</td>
+                            <td>{{ booking.return_date }}</td>
+                            <td>${{ booking.price_per_day }}</td>
+                            <td>${{ booking.total_cost }}</td>
+                            <td>{{ booking.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have no recent bookings.</p>
+        {% endif %}
+    </section>
+</div>
+
+<script>
+    // Toggle the visibility of the settings menu
+    function toggleSettingsMenu() {
+        const settingsMenu = document.getElementById("settingsMenu");
+        settingsMenu.style.display = settingsMenu.style.display === "block" ? "none" : "block";
+    }
+
+    // Close settings menu when clicking outside
+    document.addEventListener("click", function (event) {
+        const settingsMenu = document.getElementById("settingsMenu");
+        const settingsIcon = document.querySelector(".settings-icon");
+        if (!settingsMenu.contains(event.target) && !settingsIcon.contains(event.target)) {
+            settingsMenu.style.display = "none";
+        }
+    });
+
+    // Add to Cart function
+    function addToCart(carId) {
+        fetch(`/add_to_cart/${carId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Car added to cart successfully!");
+                } else {
+                    alert("Error adding car to cart.");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
+{% endblock %}

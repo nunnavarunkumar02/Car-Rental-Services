@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="cart-page">
+    <h2>Your Cart</h2>
+    {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Car Name</th>
+                    <th>Model Name</th>
+                    <th>Price Per Day</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.car_name }}</td>
+                        <td>{{ item.model_name }}</td>
+                        <td>${{ item.price_per_day }}</td>
+                        <td>
+                            <button onclick="removeFromCart({{ item.car_id }})">Remove</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+    <div class="back-dashboard-container">
+    <button onclick="window.location.href='{{ url_for('customer_dashboard') }}'" class="back-dashboard-btn">
+        Back to Dashboard
+    </button>
+</div>
+</div>
+
+<script>
+function removeFromCart(carId) {
+    fetch(`/remove_from_cart/${carId}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Car removed from cart.");
+                location.reload(); // Reloads the page to update cart
+            } else {
+                alert("Error removing car from cart.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+</script>
+{% endblock %}

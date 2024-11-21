@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="edit-car-page">
+    <h2>Edit Car Details</h2>
+    <form method="POST" action="{{ url_for('edit_car', car_id=car.car_id) }}">
+        <label for="car_name">Car Name:</label>
+        <input type="text" name="car_name" id="car_name" value="{{ car.car_name }}" required>
+
+        <label for="model_name">Model Name:</label>
+        <input type="text" name="model_name" id="model_name" value="{{ car.model_name }}" required>
+
+        <label for="rating">Rating:</label>
+        <input type="number" name="rating" id="rating" min="1" max="5" value="{{ car.rating }}" required>
+
+        <label for="available_date">Available Date:</label>
+        <input type="date" name="available_date" id="available_date" value="{{ car.available_date }}" required>
+
+        <label for="price_per_day">Price per Day:</label>
+        <input type="number" name="price_per_day" id="price_per_day" value="{{ car.price_per_day }}" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" required>{{ car.description }}</textarea>
+
+        <button type="submit">Update Car</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="payment-container">
+    <h2>Enter Payment Details</h2>
+    <form method="POST" action="{{ url_for('process_payment') }}">
+        <label for="payment_method">Payment Method:</label>
+        <select id="payment_method" name="payment_method" onchange="togglePaymentFields()" required>
+            <option value="" disabled selected>Select Payment Method</option>
+            <option value="credit">Credit Card</option>
+            <option value="debit">Debit Card</option>
+            <option value="account">Bank Account</option>
+        </select>
+
+        <!-- Card Details Section -->
+        <div id="card_details" style="display: none;">
+            <label for="card_number">Card Number:</label>
+            <input type="text" name="card_number" id="card_number" maxlength="16">
+
+            <label for="expiration_date">Expiration Date:</label>
+            <input type="text" name="expiration_date" id="expiration_date" placeholder="MM/YY">
+
+            <label for="cvv">CVV:</label>
+            <input type="text" name="cvv" id="cvv" maxlength="3">
+        </div>
+
+        <!-- Bank Account Details Section -->
+        <div id="account_details" style="display: none;">
+            <label for="account_number">Account Number:</label>
+            <input type="text" name="account_number" id="account_number">
+
+            <label for="routing_number">Routing Number:</label>
+            <input type="text" name="routing_number" id="routing_number">
+        </div>
+
+        <button type="submit">Submit Payment</button>
+    </form>
+</div>
+{% endblock %}
+
+<script>
+    function togglePaymentFields() {
+        const paymentMethod = document.getElementById("payment_method").value;
+
+        const cardDetails = document.getElementById("card_details");
+        const accountDetails = document.getElementById("account_details");
+
+        // Toggle visibility of sections
+        cardDetails.style.display = (paymentMethod === "credit" || paymentMethod === "debit") ? "block" : "none";
+        accountDetails.style.display = (paymentMethod === "account") ? "block" : "none";
+
+        // Conditionally set required attributes
+        document.getElementById("card_number").required = (paymentMethod === "credit" || paymentMethod === "debit");
+        document.getElementById("expiration_date").required = (paymentMethod === "credit" || paymentMethod === "debit");
+        document.getElementById("cvv").required = (paymentMethod === "credit" || paymentMethod === "debit");
+        document.getElementById("account_number").required = (

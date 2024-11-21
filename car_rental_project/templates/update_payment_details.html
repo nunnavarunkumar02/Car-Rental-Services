@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="update-payment-form">
+    <h2>Update Payment Details</h2>
+    
+    <!-- Form for updating payment details -->
+    <form method="POST" action="{{ url_for('update_payment_details') }}">
+        
+        <!-- Payment Method Dropdown -->
+        <label for="payment_method">Payment Method:</label>
+        <select id="payment_method" name="payment_method" onchange="togglePaymentFields()" required>
+            <option value="" disabled selected>Select Payment Method</option>
+            <option value="credit">Credit Card</option>
+            <option value="debit">Debit Card</option>
+            <option value="account">Account Details</option>
+        </select>
+
+        <!-- Credit/Debit Card Fields -->
+        <div id="cardFields" style="display:none;">
+            <label for="card_number">Card Number:</label>
+            <input type="text" id="card_number" name="card_number">
+
+            <label for="expiration_date">Expiration Date:</label>
+            <input type="text" id="expiration_date" name="expiration_date" placeholder="MM/YY">
+
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv">
+        </div>
+
+        <!-- Account Details Fields -->
+        <div id="accountFields" style="display:none;">
+            <label for="account_number">Account Number:</label>
+            <input type="text" id="account_number" name="account_number">
+
+            <label for="routing_number">Routing Number:</label>
+            <input type="text" id="routing_number" name="routing_number">
+        </div>
+
+        <button type="submit">Update Payment</button>
+    </form>
+    
+    <!-- Back to Dashboard Button -->
+    <div class="back-dashboard-container">
+    <button onclick="window.location.href='{{ url_for('customer_dashboard') }}'" class="back-dashboard-btn">
+        Back to Dashboard
+    </button>
+</div>
+</div>
+
+<script>
+function togglePaymentFields() {
+    const paymentMethod = document.getElementById('payment_method').value;
+    const cardFields = document.getElementById('cardFields');
+    const accountFields = document.getElementById('accountFields');
+
+    if (paymentMethod === 'credit' || paymentMethod === 'debit') {
+        cardFields.style.display = 'block';
+        accountFields.style.display = 'none';
+    } else if (paymentMethod === 'account') {
+        accountFields.style.display = 'block';
+        cardFields.style.display = 'none';
+    } else {
+        cardFields.style.display = 'none';
+        accountFields.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}
